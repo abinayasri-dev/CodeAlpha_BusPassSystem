@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}{{ mode }} · TransitCloud{% endblock %}
+{% block content %}
+<section class="card auth">
+  <h1>{{ mode }}</h1>
+  <p class="muted">Demo passenger: passenger@nimbus.cloud / passenger123<br>Ops: admin@nimbus.cloud / admin123</p>
+  <form method="post">
+    {% if mode == "Register" %}
+      <label>Full name</label>
+      <input name="name" required />
+    {% endif %}
+    <label>Email</label>
+    <input type="email" name="email" required />
+    <label>Password</label>
+    <input type="password" name="password" required minlength="8" />
+    <button type="submit">{{ mode }}</button>
+  </form>
+</section>
+{% endblock %}

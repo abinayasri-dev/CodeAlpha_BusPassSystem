@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Pass {{ ticket.pass_code }}{% endblock %}
+{% block content %}
+<article class="pass">
+  <p class="muted">TRANSITCLOUD DIGITAL PASS</p>
+  <h1>{{ ticket.origin }} → {{ ticket.destination }}</h1>
+  <p class="code">{{ ticket.pass_code }}</p>
+  <p>{{ ticket.holder_name }} · {{ ticket.pass_type|title }}</p>
+  <p class="muted">Fare locked at issue: ₹{{ ticket.amount }} (catalogue, not client-supplied)</p>
+  <p>Valid {{ ticket.valid_from }} — {{ ticket.valid_until }}</p>
+  <p>Status {{ ticket.status }} · Anti-theft: bound to {{ ticket.email }}</p>
+  <div class="qr" title="Scan at boarding — unique cloud ID"></div>
+</article>
+{% endblock %}

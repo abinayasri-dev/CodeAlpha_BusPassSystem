@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}TransitCloud routes{% endblock %}
+{% block content %}
+<section class="hero">
+  <p class="muted">City and intercity passes that cannot be lost, photocopied, or repriced in the browser.</p>
+  <h1>Book a cloud-issued bus pass.</h1>
+  <p>
+    Every ticket is bound to your account with a unique pass ID. Fares come from the
+    pricing table on the server, so clients cannot submit a lower amount. Extra app
+    instances can be started behind a load balancer when traffic spikes.
+  </p>
+  <div class="pills">
+    <span class="pill">Account-bound digital ticket</span>
+    <span class="pill">Fixed fare catalogue</span>
+    <span class="pill">Duplicate-booking guard</span>
+    <span class="pill">Health-checked instances</span>
+  </div>
+</section>
+<section class="grid">
+  {% for route in routes %}
+  <article class="card">
+    <h3>{{ route.origin }} → {{ route.destination }}</h3>
+    <p class="muted">{{ route.distance_km }} km · {{ route.operator }} · {{ route.departures}} daily departures</p>
+    <div class="price">₹{{ route.daily }} <small>daily</small></div>
+    <p class="muted">Weekly ₹{{ route.weekly }} · Monthly ₹{{ route.monthly }} · Student ₹{{ route.student }}</p>
+    <div class="capacity"><span style="width: {{ route.load }}%"></span></div>
+    <p class="muted">Live load {{ route.load }}% — extra workers spin up above 80%.</p>
+    {% if user %}
+    <form method="post" action="/book">
+      <input type="hidden" name="route_id" value="{{ route.id }}" />
+      <label>Pass type</label>
+      <select name="pass_type">
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+        <option value="student">Student monthly</option>
+      </select>
+      <button type="submit">Issue pass at catalogue fare</button>
+    </form>
+    {% else %}
+    <a class="btn" href="/login">Login to book</a>
+    {% endif %}
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

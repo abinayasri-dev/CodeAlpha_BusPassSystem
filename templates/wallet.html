@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}My passes{% endblock %}
+{% block content %}
+<h1>Wallet</h1>
+<p class="muted">If a phone is lost, sign in from any browser — the pass is in the cloud, not on a plastic card.</p>
+{% if not passes %}
+  <p>No passes yet. Issue one from the route board.</p>
+{% endif %}
+<section class="grid">
+  {% for pass in passes %}
+  <article class="card">
+    <p class="muted">{{ pass.origin }} → {{ pass.destination }}</p>
+    <h3>{{ pass.pass_type|title }} · ₹{{ pass.amount }}</h3>
+    <p>Status: <strong>{{ pass.status }}</strong></p>
+    <p class="muted">Valid {{ pass.valid_from }} → {{ pass.valid_until }}</p>
+    <a class="btn" href="/pass/{{ pass.pass_code }}">Open digital pass</a>
+  </article>
+  {% endfor %}
+</section>
+{% endblock %}

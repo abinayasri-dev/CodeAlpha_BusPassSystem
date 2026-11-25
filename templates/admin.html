@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Ops{% endblock %}
+{% block content %}
+<h1>Operations</h1>
+<p class="muted">
+  This node reports healthy so a load balancer can add replicas during peak booking windows.
+  Fares cannot be edited from the passenger UI.
+</p>
+<section class="grid">
+  <article class="card">
+    <h3>{{ stats.passes }}</h3>
+    <p class="muted">Passes issued</p>
+  </article>
+  <article class="card">
+    <h3>{{ stats.users }}</h3>
+    <p class="muted">Passenger accounts</p>
+  </article>
+  <article class="card">
+    <h3>{{ stats.revenue }}</h3>
+    <p class="muted">Catalogue revenue (₹)</p>
+  </article>
+  <article class="card">
+    <h3>{{ instance_id }}</h3>
+    <p class="muted">This instance</p>
+  </article>
+</section>
+<table>
+  <thead>
+    <tr><th>Pass</th><th>Holder</th><th>Corridor</th><th>Type</th><th>Fare</th><th>Status</th></tr>
+  </thead>
+  <tbody>
+    {% for pass in passes %}
+    <tr>
+      <td>{{ pass.pass_code }}</td>
+      <td>{{ pass.holder_name }}</td>
+      <td>{{ pass.origin }} → {{ pass.destination }}</td>
+      <td>{{ pass.pass_type }}</td>
+      <td>₹{{ pass.amount }}</td>
+      <td>{{ pass.status }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
